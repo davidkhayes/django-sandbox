@@ -1,0 +1,21 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static "testapp/style.css" %}">
+
+<div>
+  <h3>
+    greetings, earthlings.
+  </h3>
+  <form method="post" action="/testapp/taskq2">
+    {% csrf_token %}
+    <button type="submit" title="taskq2">
+      run a task with q2
+    </button>
+  </form>
+  <form method="post" action="/testapp/taskexec">
+    {% csrf_token %}
+    <button type="submit" title="taskexec">
+      run a task with exec
+    </button>
+  </form>
+</div>

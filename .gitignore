@@ -1,0 +1,11 @@
+db.sqlite3
+
+# python stuff
+#virtualenv/
+*.pyc
+__pycache__/
+
+# emacs stuff
+*~
+.#*
+\#*\#

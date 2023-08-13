@@ -1,0 +1,17 @@
+{% load static %}
+
+<script src="{% static "testapp/status.js" %}"></script>
+<link rel="stylesheet" href="{% static "testapp/style.css" %}">
+
+<script type="text/javascript">
+  taskId = "{{task_id}}";
+</script>
+
+<div>
+  <h3>
+    task id is <span id="task_id">{{task_id}}</span>
+  </h3>
+  <h3>
+    status is <span id="status"></span>
+  </h3>
+</div>
