@@ -36,15 +36,15 @@ def get_status(task_id):
         return None
 
     if len(task_id) == 32:  # q2 task
-        result = Task.objects.filter(id=task_id).values_list("success")
+        query = Task.objects.filter(id=task_id).values_list("success")
 
-        if result.count() == 0:
+        if query.count() == 0:
             return "running"
 
-        if result.count() > 1:
+        if query.count() > 1:
             return "huh?"
 
-        if result[0][0] == True:
+        if query[0][0] == True:
             return "finished"
         else:
             return "failed"
