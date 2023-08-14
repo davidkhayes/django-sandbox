@@ -6,18 +6,18 @@ from django_q.tasks import async_task, result, Task
 command = r"bin\task.bat" if platform.system() == "Windows" else r"bin/task.sh"
 
 
-def spawner():
-    subprocess.call([command])
+def spawner(count):
+    subprocess.call([command, str(count)])
 
 
-def run_taskq2():
-    task_id = async_task("utils.utils.spawner", hook="utils.utils.print_result")
+def run_taskq2(count):
+    task_id = async_task("utils.utils.spawner", count, hook="utils.utils.print_result")
     return task_id
 
 
-def run_taskexec():
+def run_taskexec(count):
     process = subprocess.Popen(
-        [command],
+        [command, str(count)],
         shell=False,
         stdin=subprocess.DEVNULL,
         stdout=subprocess.DEVNULL,
@@ -59,3 +59,20 @@ def get_status(task_id):
                 os.waitpid(int(task_id), 0)
                 return "finished"
         return "unknown"
+
+# mostly to check if something is a valid DB id.
+def is_positive_integer(something):
+
+    try:
+        something = float(something)
+    except Exception as e:
+        print(f"  *{e}")
+        return False
+
+    if not something.is_integer():
+        return False
+
+    if something < 1:
+        return False
+
+    return True

@@ -29,7 +29,11 @@ const getStatus = async (id) => {
   spanId.innerText = temp["status"]
 
   if (temp["status"] == "finished") clearInterval(interval);
-  if (counter++ > 30) clearInterval(interval);
+
+  if (counter++ > 30) {
+    spanId.innerText = "unknown"
+    clearInterval(interval);
+  }
 };
 
 window.onload = () => {

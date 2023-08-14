@@ -13,13 +13,33 @@ div {
   border: 1px dotted grey;
   margin: auto;
   margin-top: 25px;
-  height: 50vh;
+  height: 325px;
   width: 50vw;
   text-align: center;
 }
 
 h3 {
   padding-top: 20px;
+}
+
+input#number {
+  width: 21px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+label {
+  margin-right: 5px;
 }
 
 button {
