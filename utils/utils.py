@@ -35,7 +35,7 @@ def get_status(task_id):
     if task_id is None:
         return None
 
-    if len(task_id) == 32:  # q2 task
+    if len(task_id) == 32:  # checking a q2 task
         query = Task.objects.filter(id=task_id).values_list("success")
 
         if query.count() == 0:
@@ -49,16 +49,24 @@ def get_status(task_id):
         else:
             return "failed"
 
-    else:  # exec task
-        p = psutil.Process(int(task_id))
-        print(p)
-        if p:
-            if p.status() == "running":
-                return "running"
-            if p.status() == "zombie":
-                os.waitpid(int(task_id), 0)
+    else:  # checking a subprocess.Popen task
+        if platform.system() == "Windows":
+            try:
+                p = psutil.Process(int(task_id))
+            except psutil.NoSuchProcess:
                 return "finished"
-        return "unknown"
+            return "running"
+
+        else:        
+            p = psutil.Process(int(task_id))
+            print(p)
+            if p:
+                if p.status() == "running":
+                    return "running"
+                if p.status() == "zombie":
+                    os.waitpid(int(task_id), 0)
+                    return "finished"
+                return "unknown"
 
 # mostly to check if something is a valid DB id.
 def is_positive_integer(something):
@@ -66,7 +74,6 @@ def is_positive_integer(something):
     try:
         something = float(something)
     except Exception as e:
-        print(f"  *{e}")
         return False
 
     if not something.is_integer():
