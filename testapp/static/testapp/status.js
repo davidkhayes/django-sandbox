@@ -30,7 +30,7 @@ const getStatus = async (id) => {
 
   if (temp["status"] == "finished") clearInterval(interval);
 
-  if (counter++ > 30) {
+  if (counter++ > 50) {
     spanId.innerText = "unknown"
     clearInterval(interval);
   }

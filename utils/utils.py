@@ -66,7 +66,7 @@ def get_status(task_id):
                 if p.status() == "zombie":
                     os.waitpid(int(task_id), 0)
                     return "finished"
-                return "unknown"
+            return "unknown"
 
 # mostly to check if something is a valid DB id.
 def is_positive_integer(something):
