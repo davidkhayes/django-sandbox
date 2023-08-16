@@ -28,11 +28,15 @@ const getStatus = async (id) => {
   
   spanId.innerText = temp["status"]
 
-  if (temp["status"] == "finished") clearInterval(interval);
+  if (temp["status"] == "finished") {
+    clearInterval(interval);
+    return;
+  }
 
   if (counter++ > 50) {
     spanId.innerText = "unknown"
     clearInterval(interval);
+    return;
   }
 };
 
