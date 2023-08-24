@@ -1,15 +1,12 @@
-from utils.utils import get_status, run_taskq2, run_taskexec
-
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 import time
 
-from utils.utils import is_positive_integer
+from utils.utils import get_status, is_positive_integer, run_taskq2, run_taskexec
+
 
 def index(request):
-    t = str(time.time())
-    person = "david"
     context = {}
     return render(request, "testapp/index.html", context)
 
@@ -21,12 +18,14 @@ def taskq2(request):
         else:
             count = 10
         task_id = run_taskq2(count)
+        request.session["task_id"] = task_id
         context = {"task_id": task_id}
         return render(request, "testapp/task.html", context)
 
     if request.method == "GET":
         context = {"task_id": None}
         return render(request, "testapp/task.html", context)
+
 
 def taskexec(request):
     if request.method == "POST":
@@ -35,6 +34,7 @@ def taskexec(request):
         else:
             count = 10
         task_id = run_taskexec(count)
+        request.session["task_id"] = task_id
         context = {"task_id": task_id}
         return render(request, "testapp/task.html", context)
 
@@ -42,7 +42,7 @@ def taskexec(request):
         context = {"task_id": None}
         return render(request, "testapp/task.html", context)
 
+
 def status(request, task_id=None):
     status = get_status(task_id)
     return JsonResponse({"status": status})
-
