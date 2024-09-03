@@ -26,7 +26,7 @@ const getStatus = async (id) => {
 
   const temp = await response.json();
   console.log(JSON.stringify(temp));
-  
+
   spanId.innerText = temp["status"]
 
   if (temp["status"] == "finished") {
