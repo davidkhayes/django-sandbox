@@ -12,8 +12,9 @@ const getStatus = async (id) => {
     clearInterval(interval);
     return;
   }
-  
-  const url = `http://localhost:8000/testapp/status/${id}`;
+
+  const origin = window.location.origin;
+  const url = `${origin}/testapp/status/${id}`;
 
   try {
     response = await fetch(url);
