@@ -1,31 +1,49 @@
 let spanId;     // element
-let taskId;     // set inline
+let taskId;
 let interval;
 let counter = 0;
 
+// taskId is set inline.
+
+const handleError = (error) => {
+  spanId.innerText = error;
+  spanId.style.background = "lightgrey";
+  spanId.style.color = "red";
+  clearInterval(interval);
+};
+
 const getStatus = async (id) => {
-
-  let response;
-
-  if (id == null) {
-    alert("no id to check. can't run.");
-    clearInterval(interval);
-    return;
-  }
 
   const origin = window.location.origin;
   const url = `${origin}/testapp/status/${id}`;
 
-  try {
-    response = await fetch(url);
-  } catch (error) {
-    alert(`error: ${error}`);
+  let response, temp;
+
+  if (id == null) {
+    handleError("error: no ID to check");
     clearInterval(interval);
     return;
   }
 
-  const temp = await response.json();
-  console.log(JSON.stringify(temp));
+  try {
+    response = await fetch(url);
+  } catch (error) {
+    handleError(`error: ${error}`);
+    return;
+  }
+
+  if (!response.ok) {
+    handleError(`error (${response.status})`);
+    return;
+  }
+
+  try {
+    temp = await response.json();
+  }
+  catch (error) {
+    handleError(error);
+    return;
+  }
 
   spanId.innerText = temp["status"]
 
@@ -44,5 +62,6 @@ const getStatus = async (id) => {
 window.onload = () => {
   spanId = document.getElementById("status");
   spanId.innerText = "started";
+  taskId = document.getElementById("task_id").innerHTML;
   interval = setInterval("getStatus(taskId)", 500);
 }

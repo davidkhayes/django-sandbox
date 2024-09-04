@@ -16,6 +16,7 @@ div {
   height: 325px;
   width: 50vw;
   text-align: center;
+  position: relative;
 }
 
 h3 {
@@ -67,4 +68,21 @@ span#status {
   padding-left: 3px;
   padding-right: 3px;
   outline: dotted cornflowerblue thin;
+}
+
+span#home {
+  position: absolute;
+  padding-bottom: 2px;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+
+span#home a:link, span#home a:visited {
+  color: cornflowerblue;
+  text-decoration: none;
+}
+
+span#home a:hover {
+  text-decoration: underline;
 }

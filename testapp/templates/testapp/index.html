@@ -1,40 +1,29 @@
+{% extends "base.html" %}
+
 {% load static %}
+{% block javascript %}
+<script src="{% static "testapp/submit.js" %}"></script>
+{% endblock %}
 
-<link rel="stylesheet" href="{% static "testapp/style.css" %}">
-
-<script type="text/javascript">
-  taskId = "{{task_id}}";    // needed in status.js
-
-  const doSubmit = () => {
-    const numberId = document.getElementById("number");
-
-    // there are counts in both forms.
-    const counts = document.getElementsByClassName("count");
-    for (let i=0; i < counts.length; i++) {
-      counts[i].value = numberId.value;
-    }
-  }
-</script>
-
-<div>
-  <h3>
-    greetings, earthlings.
-  </h3>
-  <label for="quantity">count (1-10)</label>
-  <input type="number" id="number" name="number" value="5" min="1" max="20">
-  <br>
-  <form method="post" action="/testapp/taskq2">
-    {% csrf_token %}
-    <input type="hidden" class="count" name="count" value=5>
-    <button type="submit" title="taskq2" onclick="doSubmit()">
-      run a task with q2
-    </button>
-  </form>
-  <form method="post" action="/testapp/taskexec">
-    {% csrf_token %}
-    <input type="hidden" class="count" name="count" value=5>
-    <button type="submit" title="taskexec" onclick="doSubmit()">
-      run a task with exec
-    </button>
-  </form>
-</div>
+{% block content %}
+<h3>
+  greetings, earthlings.
+</h3>
+<label for="quantity">count (1-10)</label>
+<input type="number" id="number" name="number" value="5" min="1" max="20">
+<br>
+<form method="post" action="/testapp/taskq2">
+  {% csrf_token %}
+  <input type="hidden" class="count" name="count" value=5>
+  <button type="submit" title="taskq2" onclick="doSubmit()">
+    run a task with q2
+  </button>
+</form>
+<form method="post" action="/testapp/taskexec">
+  {% csrf_token %}
+  <input type="hidden" class="count" name="count" value=5>
+  <button type="submit" title="taskexec" onclick="doSubmit()">
+    run a task with exec
+  </button>
+</form>
+{% endblock %}
