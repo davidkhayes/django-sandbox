@@ -57,7 +57,7 @@ def get_status(task_id):
                 return "finished"
             return "running"
 
-        else:        
+        else:
             p = psutil.Process(int(task_id))
             print(p)
             if p:
