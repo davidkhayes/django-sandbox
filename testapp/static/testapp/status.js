@@ -3,8 +3,6 @@ let taskId;
 let interval;
 let counter = 0;
 
-// taskId is set inline.
-
 const handleError = (error) => {
   spanId.innerText = error;
   spanId.style.background = "lightgrey";
@@ -21,7 +19,6 @@ const getStatus = async (id) => {
 
   if (id == null) {
     handleError("error: no ID to check");
-    clearInterval(interval);
     return;
   }
 
