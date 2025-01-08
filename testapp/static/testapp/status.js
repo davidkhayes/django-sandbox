@@ -17,7 +17,7 @@ const getStatus = async (id) => {
 
   let response, temp;
 
-  if (id == null) {
+  if (!id) {
     handleError("error: no ID to check");
     return;
   }
